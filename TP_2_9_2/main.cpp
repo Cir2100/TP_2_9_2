@@ -1,18 +1,28 @@
+#include "UsersInput.h"
+#include "task.h"
 #include <iostream>
 #include <Windows.h>
-#include <fstream>
-#include <string>
 
 using namespace std;
+
+string readFile(ifstream& input) {
+	string s = "";
+	string tmpS;
+	while (getline(input, tmpS))
+		s.append(tmpS).append("\n");
+	return s;
+}
 
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	ifstream input("text.txt");
+	int countFindSuggestion;
+	inputData("Введите количество слов в предложении: ", countFindSuggestion, 0, INT32_MAX);
 
-	string s;
-	getline(input, s);
-
+	string filename;
+	processInputNameOfInputFile(filename);
+	ifstream input(filename);
+	cout << "Найденные предложения:\n" << findSuggestoins(readFile(input), countFindSuggestion);
 	input.close();
 }
